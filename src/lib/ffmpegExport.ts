@@ -17,7 +17,9 @@ export async function exportKaraoke(videoFile: File, lines: KaraokeLine[], style
   });
 
   try {
-    const apiUrl = import.meta.env.DEV ? 'http://127.0.0.1:4175/api/export' : '/api/export';
+   const apiUrl = import.meta.env.DEV
+  ? 'http://127.0.0.1:4175/api/export'
+  : `${import.meta.env.VITE_API_URL}/api/export`;
     const response = await fetch(apiUrl, {
       method: 'POST',
       body: formData,
