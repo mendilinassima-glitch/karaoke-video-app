@@ -5,10 +5,11 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import ffmpegPath from '@ffmpeg-installer/ffmpeg';
+import ffprobePath from '@ffprobe-installer/ffprobe';
 import ffmpeg from 'fluent-ffmpeg';
 
 ffmpeg.setFfmpegPath(ffmpegPath.path);
-
+ffmpeg.setFfprobePath(ffprobePath.path);
 const app = express();
 const upload = multer({ dest: path.join(os.tmpdir(), 'karaoke-upload') });
 
