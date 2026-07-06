@@ -318,8 +318,7 @@ app.post('/api/export', upload.single('video'), async (req, res) => {
   .save(outputPath);
 
   });
-}
-      });
+
     }
 
     const desktopDir = path.join(os.homedir(), 'Desktop');
