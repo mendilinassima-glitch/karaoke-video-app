@@ -285,26 +285,40 @@ app.post('/api/export', upload.single('video'), async (req, res) => {
           .save(outputPath);
       });
     } else {
-      await new Promise((resolve, reject) => {
-        console.log(`Démarrage FFmpeg avec le fichier: ${videoFile.path}`);
-        ffmpeg(videoFile.path)
-          .videoFilters([`ass=${assPath}`])
-          .outputOptions(ffmpegOptions)
-          .on('start', (commandLine) => {
-            console.log('FFmpeg started:', commandLine);
-          })
-          .on('progress', (progress) => {
-            console.log('FFmpeg progress:', progress);
-          })
-          .on('end', () => {
-            console.log('FFmpeg terminé avec succès');
-            resolve();
-          })
-          .on('error', (err) => {
-            console.error('FFmpeg error:', err);
-            reject(err);
-          })
-          .save(outputPath);
+  await new Promise((resolve, reject) => {
+
+    console.log(`Démarrage FFmpeg avec le fichier: ${videoFile.path}`);
+
+    console.log("===== AVANT FFMPEG =====");
+    console.log(process.memoryUsage());
+
+    ffmpeg(videoFile.path)
+  .videoFilters([`ass=${assPath}`])
+  .outputOptions(ffmpegOptions)
+
+  .on('start', (commandLine) => {
+    console.log('FFmpeg started:', commandLine);
+  })
+
+  .on('progress', (progress) => {
+    console.log('FFmpeg progress:', progress);
+    console.log(process.memoryUsage());
+  })
+
+  .on('end', () => {
+    console.log('FFmpeg terminé avec succès');
+    resolve();
+  })
+
+  .on('error', (err) => {
+    console.error('FFmpeg error:', err);
+    reject(err);
+  })
+
+  .save(outputPath);
+
+  });
+}
       });
     }
 
